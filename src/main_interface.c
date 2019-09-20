@@ -39,7 +39,7 @@ int main()
 	int choice = 0;	/* variable for switch case */
 	int count = 0;	/* for number of matches found */
 	int result = 0;		/* for checking status */ 	
-    	char path[PATH_SIZE] = "/user/gur51070/project_practice_1.0/LSE_1.1_updated/file_system/";	/* path of searching directory */
+    	char path[PATH_SIZE] = "/home/saasbook/GIT/LSE/file_system/";	/* path of searching directory */
     	char user_string[MAX_SIZE] = {'\0'};	/* user input string/pattern */
 	
 	/*
@@ -145,7 +145,7 @@ int main()
 				/*
 				* opening a file to store the path of all files where the string matches.
 				*/
-				fp = fopen("/user/gur51070/project_practice_1.0/LSE_1.1_updated/data/output.txt", "w");
+				fp = fopen("/home/saasbook/GIT/LSE/data/output.txt", "w");
 				if(fp == NULL)
 				{
 					printf("\nFile not opened\n");

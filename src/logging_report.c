@@ -37,7 +37,7 @@ void logging_report(char *buf)
 		FILE* fp1 = NULL;
 		
 		/* Opening file to store the log message in it */
-		fp1 = fopen("/user/gur51070/project_practice_1.0/LSE_1.1_updated//logging_dir/log_report.txt", "a");
+		fp1 = fopen("/home/saasbook/GIT/LSE/logging_dir/log_report.txt", "a");
 	
 		fprintf(fp1,"%s\n",buf);
 	

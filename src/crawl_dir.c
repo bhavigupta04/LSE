@@ -104,7 +104,7 @@ int search_pattern_in_file_system(char *dir,
 					*count += 1;
 
 					/* System call to take current directory path into the temp file */
-                    			system("pwd > /user/gur51070/project_practice_1.0/LSE_1.1_updated/data/temp_file.txt");
+                    			system("pwd > /home/saasbook/GIT/LSE/data/temp_file.txt");
                     			
 					/* Function call to read current directory path from temp_file */
 					read_temp_file(path_buffer);

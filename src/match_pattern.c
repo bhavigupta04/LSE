@@ -98,7 +98,7 @@ void read_temp_file(char *path_buffer)
 	logging_report("ENTERING: read_temp_file()");
 
    	/* Opening the temp file in read mode */
-	fp = fopen("/user/gur51070/project_practice_1.0/LSE_1.1_updated/data/temp_file.txt", "r");
+	fp = fopen("/home/saasbook/GIT/LSE/data/temp_file.txt", "r");
 	if(fp == NULL)
 	{
 		printf("\nFile not opened\n");

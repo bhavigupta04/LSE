@@ -51,7 +51,7 @@ int open_user_entered_file()
 	scanf("%s",file_name);
 	
 	/* opening the file containing the path of the listed files */
-	fp = fopen("/user/gur51070/project_practice_1.0/LSE_1.1_updated/data/output.txt", "r");
+	fp = fopen("/home/saasbook/GIT/LSE/data/output.txt", "r");
 	if(fp == NULL)
 	{
 		printf("FILE NOT OPENED\n");
