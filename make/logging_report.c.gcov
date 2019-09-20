@@ -1,0 +1,48 @@
+        -:    0:Source:../src/logging_report.c
+        -:    0:Graph:logging_report.gcno
+        -:    0:Data:logging_report.gcda
+        -:    0:Runs:3
+        -:    0:Programs:1
+        -:    1:/*********************************************************************************
+        -:    2:*
+        -:    3:*  FILE NAME   : logging_report.c
+        -:    4:*
+        -:    5:*  DESCRIPTION : it include functions to genrate logging report.
+        -:    6:*
+        -:    7:*  DATE	NAME		REFERENCE				REASON
+        -:    8:*  4/05/18	GR_TH5_C_5	Local Search Engine 	  	Nalanda Project
+        -:    9:*
+        -:   10:*  Copyright 2018, Aricent Tech. (Holdings) Ltd.
+        -:   11:*
+        -:   12:**********************************************************************************/
+        -:   13:
+        -:   14:/******************************************************************************
+        -:   15:*
+        -:   16:*				USER DEFINED HEADER 
+        -:   17:*
+        -:   18:******************************************************************************/
+        -:   19:
+        -:   20:#include <search_util.h>			
+        -:   21:
+        -:   22:/*********************************************************************************
+        -:   23: *	FUNCTION NAME	: logging_report
+        -:   24: *
+        -:   25: *	DESCRIPTION	: This function writes message into log_report file.
+        -:   26: *
+        -:   27: *	RETURNS 	: VOID
+        -:   28:
+        -:   29:**********************************************************************************/
+        -:   30:
+        -:   31:
+      180:   32:void logging_report(char *buf)
+        -:   33:{	
+      180:   34:		FILE* fp1 = NULL;
+        -:   35:		
+      180:   36:		fp1 = fopen("/user/gur51070/project_practice_1.0/LSE_1.1_updated//log_dir/log_report.txt", "a");
+        -:   37:	
+      180:   38:		fprintf(fp1,"%s\n",buf);
+        -:   39:	
+      180:   40:		fclose(fp1);
+        -:   41:
+      180:   42:}
+        -:   43:

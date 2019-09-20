@@ -1,0 +1,132 @@
+        -:    0:Source:../src/crawl_dir.c
+        -:    0:Graph:crawl_dir.gcno
+        -:    0:Data:crawl_dir.gcda
+        -:    0:Runs:3
+        -:    0:Programs:1
+        -:    1:/*********************************************************************************
+        -:    2:*	FileName : crawl_dir.c
+        -:    3:*
+        -:    4:*	Description : This file contains the function to search directories and other
+        -:    5:*			sub-directories for the desired files.
+        -:    6:*
+        -:    7:*	Date:		Name:		Reference:		Reason:
+        -:    8:*	30/04/18	GR_TH5_C_5	Local Search Engine	Nalanda Project
+        -:    9:*
+        -:   10:*	Copyright @2018, Aricent Tech. Holdings Ltd.
+        -:   11:*
+        -:   12:**********************************************************************************/
+        -:   13:
+        -:   14:/******************************************************************************
+        -:   15:*
+        -:   16:*				USER DEFINED HEADER 
+        -:   17:*
+        -:   18:******************************************************************************/
+        -:   19:
+        -:   20:#include <search_util.h>
+        -:   21:
+        -:   22:/******************************************************************************
+        -:   23:*
+        -:   24:*	FUNCTION NAME : search_pattern_in_file_system()
+        -:   25:*
+        -:   26:*	DESCRIPTION : This function search the string in the file system and
+        -:   27:*			displays the path of the files in which it is found.
+        -:   28:*
+        -:   29:*	ARGUMENTS : dir - search directory
+        -:   30:*		     user_pattern - user input string/pattern		     
+        -:   31:*		     fp - file pointer to the file to store the path of all 
+        -:   32:*			   files where the string matches.
+        -:   33:*		     count - variable for number of matches found.
+        -:   34:*
+        -:   35:*	RETURNS : SUCCESS
+        -:   36:*
+        -:   37:******************************************************************************/
+        -:   38:
+       64:   39:int search_pattern_in_file_system(char *dir, char *user_pattern, FILE *fp, int *count)
+        -:   40:{
+        -:   41:	DIR *dir_ptr;					/* Directory stream */
+        -:   42:    	struct dirent *dir_info;			/* Dirent structure */
+        -:   43:    	struct stat file_info;			/* stat structure */
+       64:   44:    	int result = 0;				/* for checking status */
+       64:   45:    	char path_buffer[MAX_SIZE] = {'\0'};	/* buffer to store path */
+        -:   46:    	
+       64:   47:	logging_report("ENTERING: search_pattern_in_file_system()");
+        -:   48:	/*
+        -:   49:	* Validation for the directory.
+        -:   50:	*/
+       64:   51:    	if((dir_ptr = opendir(dir)) == NULL) 
+        -:   52:    	{
+    #####:   53:       		fprintf(stderr,"cannot open directory: %s\n", dir);
+    #####:   54:       		return 1;
+        -:   55:	}
+        -:   56:
+       64:   57:    	chdir(dir);	/* jumping to the search directory */
+        -:   58:  	
+        -:   59:	/*
+        -:   60:	* loop for reading the directories and sub-directories.
+        -:   61:	*/
+      410:   62:    	while((dir_info = readdir(dir_ptr)) != NULL) 
+        -:   63:    	{
+      282:   64:        	lstat(dir_info->d_name, &file_info);	/* system call to get the file information */
+        -:   65:   
+        -:   66:		/*
+        -:   67:		* Checking for the directory
+        -:   68:		*/
+      282:   69:	     	if(S_ISDIR(file_info.st_mode)) 
+        -:   70:        	{
+        -:   71:        		/* Ignoring '.' and '..' in the directory */
+      190:   72:            		if((strcmp(".", dir_info->d_name) == 0) || (strcmp("..", dir_info->d_name) == 0))
+        -:   73:			{
+      128:   74:                		continue;
+        -:   75:			}
+        -:   76:          		
+        -:   77:            		/* Recursive call for checking other sub directories */
+       62:   78:            		result = search_pattern_in_file_system(dir_info->d_name, user_pattern, fp, count);
+        -:   79:        	}
+        -:   80:
+        -:   81:        	else 
+        -:   82:		{
+        -:   83:			/*
+        -:   84:			* checking the file type(".txt")
+        -:   85:			*/
+       92:   86:			if (S_ISREG(file_info.st_mode))       //(strstr(dir_info->d_name, ".txt") != NULL)
+        -:   87:            		{
+        -:   88:				/* Printing all searched files */
+        -:   89:				//printf("file: %s\n" ,dir_info->d_name); 
+        -:   90:
+        -:   91:				/*
+        -:   92:				* function call for matching the pattern in the files
+        -:   93:				*/
+       92:   94:				result = match_pattern(dir_info->d_name, user_pattern);
+       92:   95:				if(result == SUCCESS)
+        -:   96:				{
+       18:   97:					*count += 1;
+        -:   98:
+        -:   99:					/* System call to take current directory path into the temp file */
+       18:  100:                    			system("pwd > /user/gur51070/project_practice_1.0/LSE_1.1_updated/data/temp_file.txt");
+        -:  101:                    			
+        -:  102:					/* Function call to read current directory path from temp_file */
+       18:  103:					read_temp_file(path_buffer);
+        -:  104:					
+        -:  105:					/* Concatenating file name to the path */
+       18:  106:                    			strcat(path_buffer, "/");
+       18:  107:                    			strcat(path_buffer, dir_info->d_name);
+        -:  108:					
+        -:  109:					/* Printing the path of file */
+       18:  110:					printf("\nMATCHED IN: %s\n", path_buffer);
+        -:  111:					
+        -:  112:					/* Checking file pointer */
+       18:  113:					if(fp != NULL)
+        -:  114:					{
+        9:  115:						fprintf(fp, "%s\n", path_buffer);	/* Writing path in the file */ 
+        -:  116:					}
+        -:  117:				}
+        -:  118:            		}
+        -:  119:    		}
+        -:  120:	}	/* End of while loop */
+        -:  121:
+       64:  122:    	chdir("..");		/* jumping to previous directory */
+       64:  123:    	closedir(dir_ptr);	/* closing the directory stream */
+       64:  124:	logging_report("EXITING: search_pattern_in_file_system()");
+        -:  125:	
+       64:  126:	return SUCCESS;
+        -:  127:}

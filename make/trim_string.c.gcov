@@ -1,0 +1,66 @@
+        -:    0:Source:../src/trim_string.c
+        -:    0:Graph:trim_string.gcno
+        -:    0:Data:trim_string.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*********************************************************************************
+        -:    2:*
+        -:    3:*  FILE NAME   : trim_string.c
+        -:    4:*
+        -:    5:*  DESCRIPTION : This file contains a function to remove leading spaces.
+        -:    6:*
+        -:    7:*  DATE	NAME		REFERENCE				REASON
+        -:    8:*  4/05/18	GR_TH5_C_5	Local Search Engine 	  	Nalanda Project
+        -:    9:*
+        -:   10:*  Copyright 2018, Aricent Tech. (Holdings) Ltd.
+        -:   11:*
+        -:   12:**********************************************************************************/
+        -:   13:
+        -:   14:/******************************************************************************
+        -:   15:*
+        -:   16:*				USER DEFINED HEADER 
+        -:   17:*
+        -:   18:******************************************************************************/
+        -:   19:
+        -:   20:#include <search_util.h>		
+        -:   21:
+        -:   22:/******************************************************************************
+        -:   23:*
+        -:   24:*	FUNCTION NAME : trim_leading_space
+        -:   25:*
+        -:   26:*	DESCRIPTION : This function remove all leading spaces present in the string.
+        -:   27:*
+        -:   28:*	ARGUMENTS : str - string/pattern .
+        -:   29:*
+        -:   30:*	RETURNS : VOID.
+        -:   31:*
+        -:   32:******************************************************************************/
+        -:   33:
+        -:   34:
+        1:   35:void trim_leading_space(char * str)
+        -:   36:{
+        -:   37:    	int index;
+        1:   38:	int i = 0;;
+        -:   39:
+        1:   40:    	index = 0;
+        -:   41:	
+        1:   42:	logging_report("ENTERING: trim_leading_space()");
+        -:   43:    	/* Find last index of whitespace character */
+        5:   44:    	while((str[index] == ' ') || (str[index] == '\t') || (str[index] == '\n'))
+        -:   45:    	{
+        3:   46:       	index++;
+        -:   47:    	}
+        -:   48:
+        1:   49:    	if(index != 0)
+        -:   50:    	{
+        -:   51:       	 /* Shit all trailing characters to its left */
+        1:   52:       	 i = 0;
+        6:   53:       	 while(str[i + index] != '\0')
+        -:   54:        	{
+        4:   55:            		str[i] = str[i + index];
+        4:   56:            		i++;
+        -:   57:        	}
+        1:   58:        	str[i] = '\0'; // Make sure that string is NULL terminated
+        -:   59:    	}
+        1:   60:	logging_report("EXITING: trim_leading_space()");
+        1:   61:}/*EOF*/

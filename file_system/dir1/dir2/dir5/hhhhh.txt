@@ -1,0 +1,32 @@
+INPUT:FILE1
+bhanu ?prashant harman
+ankit -yash
+gupta shubham
+ggggg jjjjj -kkkkkk nnnnnn
+INPUT:FILE1
+a -b c 
+d m 
+bbbb -nnn ?uuu lll
+hhh ?yyy 
+TOTAL LINES:8
+OUTPUT:
+bhanu ?prashant harman 
+ggggg jjjjj -kkkkkk nnnnnn 
+a -b c 
+bbbb -nnn ?uuu lll 
+INPUT:FILE1
+bhanu ?prashant harman
+ankit -yash
+gupta shubham
+ggggg jjjjj -kkkkkk nnnnnn
+INPUT:FILE1
+a -b c 
+d m 
+bbbb -nnn Deepa ?uuu lll
+hhh ?yyy 
+TOTAL LINES:8
+OUTPUT:
+bhanu ?prashant harman 
+ggggg jjjjj -kkkkkk nnnnnn 
+a -b c 
+bbbb -nnn ?uuu lll 
